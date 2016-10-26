@@ -5,15 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.iamantony.todo.MainActivity">
-    <EditText
-        android:id="@+id/etTodo"
+    <fragment android:name="com.iamantony.todo.ItemFragment"
+        android:id="@+id/itemFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/addItemHint"
-        android:contentDescription="@string/addItemContentDescription"
         />
-    <ListView
-        android:id="@+id/lvTodo"
+    <fragment android:name="com.iamantony.todo.ToDoListFragment"
+        android:id="@+id/todoListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />

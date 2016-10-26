@@ -1,6 +1,7 @@
 package com.iamantony.todo;
 
 import android.graphics.Bitmap;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.res.Configuration;
@@ -13,11 +14,13 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements OnNewItemAddedListener {
 
     public static final String TAG = "ToDo";
-    private ListView m_listView = null;
-    private EditText m_editText = null;
+
+    private ArrayList<String> todoItems;
+    private ArrayAdapter<String> arrAdapter;
 
     // onCreate() will be called when the application is created
     @Override
@@ -27,29 +30,21 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        m_listView = (ListView)findViewById(R.id.lvTodo);
-        m_editText = (EditText) findViewById(R.id.etTodo);
+        FragmentManager fm = getSupportFragmentManager();
+        ToDoListFragment toDoListFragment =
+                (ToDoListFragment)fm.findFragmentById(R.id.todoListFragment);
 
-        final ArrayList<String> todoItems = new ArrayList<String>();
-        final ArrayAdapter<String> arrAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, todoItems);
+        todoItems = new ArrayList<String>();
 
-        m_listView.setAdapter(arrAdapter);
+        arrAdapter = new ArrayAdapter<String>(this,
+                R.layout.text_item_fragment, todoItems);
 
-        m_editText.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if ((keyCode == KeyEvent.KEYCODE_DPAD_CENTER) ||
-                            (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                        todoItems.add(0, m_editText.getText().toString());
-                        arrAdapter.notifyDataSetChanged();
-                        m_editText.setText("");
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
+        toDoListFragment.setListAdapter(arrAdapter);
+    }
+
+    public void onNewItemAdded(String newItem) {
+        todoItems.add(newItem);
+        arrAdapter.notifyDataSetChanged();
     }
 
     // onConfigurationChanged() will be called if there will be runtime changes
