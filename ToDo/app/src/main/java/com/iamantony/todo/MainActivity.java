@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity
 
     public static final String TAG = "ToDo";
 
-    private ArrayList<String> todoItems;
-    private ArrayAdapter<String> arrAdapter;
+    private ArrayList<ToDoItem> todoItems;
+    private ToDoItemAdapter arrAdapter;
 
     // onCreate() will be called when the application is created
     @Override
@@ -34,16 +34,17 @@ public class MainActivity extends AppCompatActivity
         ToDoListFragment toDoListFragment =
                 (ToDoListFragment)fm.findFragmentById(R.id.todoListFragment);
 
-        todoItems = new ArrayList<String>();
+        todoItems = new ArrayList<ToDoItem>();
 
-        arrAdapter = new ArrayAdapter<String>(this,
-                R.layout.text_item_fragment, todoItems);
+        arrAdapter = new ToDoItemAdapter(
+                this, R.layout.text_item_fragment, todoItems);
 
         toDoListFragment.setListAdapter(arrAdapter);
     }
 
     public void onNewItemAdded(String newItem) {
-        todoItems.add(newItem);
+        ToDoItem item = new ToDoItem(newItem);
+        todoItems.add(item);
         arrAdapter.notifyDataSetChanged();
     }
 
