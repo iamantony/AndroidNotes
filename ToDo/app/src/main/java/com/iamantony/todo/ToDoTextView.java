@@ -39,6 +39,8 @@ public class ToDoTextView extends TextView {
 
         m_linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         m_linePaint.setColor(resources.getColor(R.color.colorTextItemBorder));
+
+        this.setTextIsSelectable(true);
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements OnNewItemAddedListener {
+        implements ItemFragment.OnNewItemAddedListener {
 
     public static final String TAG = "ToDo";
 

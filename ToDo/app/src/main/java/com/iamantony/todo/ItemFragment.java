@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.iamantony.todo.OnNewItemAddedListener;
-
 public class ItemFragment extends Fragment {
     public static final String TAG = "ItemFragment";
-    private OnNewItemAddedListener onNewItemAddedListener;
+
+    public interface OnNewItemAddedListener {
+        public void onNewItemAdded(String newItem);
+    }
+
+    private OnNewItemAddedListener m_onNewItemAddedListener;
     private EditText m_editText = null;
 
     @Override
@@ -28,7 +31,7 @@ public class ItemFragment extends Fragment {
                     if ((keyCode == KeyEvent.KEYCODE_DPAD_CENTER) ||
                             (keyCode == KeyEvent.KEYCODE_ENTER)) {
                         String newItem = m_editText.getText().toString();
-                        onNewItemAddedListener.onNewItemAdded(newItem);
+                        m_onNewItemAddedListener.onNewItemAdded(newItem);
                         m_editText.setText("");
                         return true;
                     }
@@ -45,7 +48,7 @@ public class ItemFragment extends Fragment {
         super.onAttach(activity);
 
         try {
-            onNewItemAddedListener = (OnNewItemAddedListener)activity;
+            m_onNewItemAddedListener = (OnNewItemAddedListener)activity;
         }
         catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() +
